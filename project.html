@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weatherly</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    body {
+      background-image: url(Assets/background.png);
+       background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 100%;
+        height: 1000px;
+        position: relative;
+    }
+
+
+    @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+  /* Overlay for background image */
+    body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background: rgba(31, 37, 69, 0.45); /* night overlay */
+        z-index: -1;
+        transition: background-color 0.4s ease;
+    }
+
+    /* Light mode overlay */
+    body.day::after {
+        background: rgba(189, 184, 184, 0.2); /* light overlay */
+    }
+
+      /* Cards default night mode */
+      .card {
+          background: rgba(35, 34, 34, 0.95);
+          color: #000;
+          transition: background-color 0.4s ease, color 0.4s ease;
+      }
+
+      /* Cards light mode */
+      body.day .card {
+          background: rgba(239, 235, 235, 0.4);
+          color: #fffcfc;
+      }
+
+      /* Search input default night mode */
+      .search input {
+          background: rgba(9, 9, 9, 0.9);
+          color: #000;
+          border: 2px solid rgb(99, 138, 238);
+          transition: background-color 0.4s ease, color 0.4s ease, border 0.4s ease;
+      }
+
+      /* Search input light mode */
+      body.day .search input {
+          background: rgba(230, 227, 227, 0.964);
+          color: #0d0d0d;
+          border: 2px solid rgba(255,255,255,0.3);
+      }
+
+  
+
+
+
+
+
+    /* Navigation */
+    .logo{
+      padding: 10px 20px;
+      
+    }
+    
+    .logo h1 {
+      font-size: 50px;
+      font-weight: 40px;
+      color: rgb(208, 208, 213);
+      transition: color  0.5s ease; /* smooth transition */
+      animation: fadeInDown 1s ease-out;
+     }
+
+    /* Light mode H1 */
+    body.day .logo h1 {
+      font-size: 50px;
+      font-weight: 40px;
+      color:#222;; /* light mode color */
+    }
+
+
+
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px;
+      max-width: 1200px;
+      margin: 40px auto 0 auto;
+      animation: fadeInDown 1s ease-out; /* only nav container */
+    }
+
+    .nav ul {
+      display: flex;
+      list-style: none;
+      gap: 30px;
+      margin: 0 auto;
+      padding: 0;
+    }
+
+    .nav ul li a {
+      display: inline-block; /* must for transform */
+      color: #fff; /* night mode default */
+      font-size: 18px;
+      font-weight: bold;
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(10px);
+      transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease;
+    }
+
+    /* Hover effect: translate up */
+    .nav ul li a:hover {
+      transform: translateY(-5px);
+      background: rgba(255,255,255,0.3); /* optional glow effect */
+    }
+
+    /* Theme toggle color for day mode */
+    body.day .nav ul li a {
+      color: #000;
+      background: rgba(0,0,0,0.15);
+    }
+
+    body.day .nav ul li a:hover {
+      background: rgba(0,0,0,0.25);
+    }
+
+    /* Logo */
+    .nav .logo h1 {
+      font-size: 40px;
+      color: #fff;
+      font-weight: 700;
+      transition: color 0.5s ease;
+    }
+
+    /* Logo day mode */
+    body.day .nav .logo h1 {
+      color: #222;
+    }
+
+    /* Day mode */
+    body.day .nav ul li a {
+      color: #000; /* black text for day */
+    }
+
+
+
+
+
+
+
+
+    /* toggle */
+
+    .theme-toggle {
+      margin-left: auto; /* push to right */
+    }
+
+
+      .theme-toggle {
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+        font-size: 22px;
+        background: rgba(255,255,255,0.15);
+        backdrop-filter: blur(10px);
+        color: white;
+        box-shadow: 0 0 25px rgba(0,0,0,0.4);
+        transition: all 0.4s ease;
+        animation: fadeInDown 1s ease-out;
+      } 
+
+    /* Hover effect */
+    .theme-toggle:hover {
+      transform: scale(1.1) rotate(10deg);
+    }
+
+    /* Day mode */
+    body.day .theme-toggle {  
+      background: rgba(0,0,0,0.15);
+      color: #222;
+    }
+
+      
+      .theme-toggle:hover {
+          transform: scale(1.1) rotate(10deg);
+      }
+
+      /* DAY BUTTON COLOR */
+      body.day .theme-toggle {  
+          background: rgba(0,0,0,0.15);
+          color: #222;
+      }
+
+
+  
+
+    /* Hero section */
+   
+    .head h2{
+
+      margin-top: 100px;
+      text-align: center;
+      font-size: 40px;
+    }
+
+    .type{
+  
+      margin: 8px auto;
+      font-size: 25px;
+      text-align: center;
+      width: 0ch;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 3px solid #fdfbfb;
+      animation: typing 10s steps(40) forwards infinite;
+
+      
+    }
+
+    @keyframes typing {
+      0%{ width: 0ch; }
+      100% { width: 40ch; }
+    }
+
+    /* Night mode (default) */
+    .head h2,
+    .type {
+      color: #fff;
+    }
+
+    /* Day mode */
+    body.day .head h2,
+    body.day .type {
+      color: #000; 
+    }
+
+    .search-wrapper{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      top: 20px;
+    }
+
+   
+    .search{
+      position: relative;
+      width: 80%;
+      margin-top: 0;
+    }
+
+    .search input{
+      color: #fdfbfb;
+      width: 100%;
+      padding: 14px 50px 14px 15px;
+      border-radius: 30px;
+      border: 2px solid rgb(99, 138, 238);
+      font-size: 16px;
+      display: flex;
+    }
+
+    /* search icon  */
+    #btn{
+      color: white;
+      position:absolute;
+      right:18px;
+      top:40%;
+      cursor:pointer;
+    }
+
+    /* Info section */
+    #info{
+      display: flex;
+      justify-content: center;
+      flex-wrap: nowrap;
+      margin-top: 40px;
+    }
+
+    #loading{
+      display: none;
+      text-align:center;
+      color:white;
+      margin-top:50px;
+      font-size:20px;
+    }
+
+    .card-container{
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 30px;
+  }
+
+  .card{
+    width: 300px;
+    padding: 20px;
+    border-radius: 15px;
+    backdrop-filter: blur(15px);
+    display: none;
+  }
+
+  /* Night mode */
+  .card{
+    background: rgba(0,0,0,0.6);
+    color: white;
+  }
+
+  /* Day mode */
+  body.day .card{
+    background: rgba(255,255,255,0.6);
+    color: black;
+  }
+
+
+    
+
+
+
+
+
+
+    @keyframes fadeIn{
+      from { opacity:0; transform: translateY(20px); }
+      to { opacity:1; transform: translateY(0); }
+    }
+
+
+    /* city card */
+
+    #city-card{
+    height: 400px;
+    border-radius: 20px;
+    background: url(Assets/city1.png);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    margin: 20px auto;
+  
+    }
+
+
+    #temp-card{
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: white;
+    position: relative;
+    border-radius: 15px;
+  }
+
+  /* dark overlay so text readable rahe */
+  #temp-card::after{
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    border-radius: 15px;
+  }
+
+  #temp-card *{
+    position: relative;
+    z-index: 1;
+  }
+
+
+    .country-flag{
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .country-flag img{
+      width: 100px;
+    }
+
+    .info-row{
+      display: flex;
+      font-size: 20px;
+      font-weight: bold;
+      color: #0e0d0d;
+      justify-content: space-between;
+      padding: 5px;
+  
+    
+    }
+
+    .info-row p:first-child{
+      font-size: 18px;
+      font-weight: bold;
+      color: #030303;
+      padding: 8px;
+    }
+
+    .info-row p:last-child{
+      margin-top: 10px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    h3{
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+
+
+     #city-card{
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: rgb(20, 20, 20);
+    position: relative;
+    border-radius: 15px;
+  }
+
+  /* dark overlay so text readable rahe */
+    #city-card::after{
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      border-radius: 15px;
+    }
+
+    #city-card *{
+      position: relative;
+      z-index: 1;
+    }
+
+     #city-card:hover{
+      transform: translateY(-10px);
+      box-shadow: 0 0 12px black;
+    }
+
+
+
+    .info-row1{
+      text-align: center;
+      color: #0d0d0d;
+      margin-top: 20px;
+      color: #090909;
+
+    }
+
+    #temp{
+      font-size: 50px;
+      font-weight: bold;
+      font-family: poppins;
+    }
+
+    .info-row1 p:first-child{
+      font-size: 20px;
+      font-weight: bold;
+      color: #030303;
+      padding: 8px;
+    }
+
+
+    .temp-card{
+      padding: 10px;
+
+    }
+
+     #temp-card:hover{
+      transform: translateY(-10px);
+      box-shadow: 0 0 12px black;
+    }
+
+    #time-card{
+    text-align: center;
+    margin: 20px auto;
+    height: 400px;
+    background:url(Assets/back.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: rgb(20, 20, 20);
+    position: relative;
+    border-radius: 15px;
+  }
+
+  /* dark overlay so text readable rahe */
+    #time-card::after{
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      border-radius: 15px;
+    
+    }
+
+    #time-card *{
+      position: relative;
+      z-index: 1;
+    }
+
+    #time-card:hover{
+      transform: translateY(-10px);
+      box-shadow: 0 0 12px black;
+    }
+
+    #time-card .time-value{
+      font-family: 'Inter', 'Poppins', 'Montserrat', sans-serif;
+      font-size: 42px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      margin: 15px 0;
+    }
+
+    /* date styling */
+    #time-card .time-date{
+  font-size: 16px;
+  opacity: 0.85;
+  letter-spacing: 0.5px;
+}
+
+
+#time-card .time-status{
+  margin-top: 10px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+
+/* title styling */
+#time-card .time-title{
+  font-size: 20px;
+  letter-spacing: 1px;
+  opacity: 0.9;
+}
+
+.local-time{
+  font-size: 30px;
+  padding: 20px;
+}
+
+#desc{
+  font-size: Bolder;
+  font-family: poppins;
+  font-size: 30px;
+  color: rgb(58, 59, 59);
+}
+
+
+
+
+
+
+
+   
+
+
+  h6{
+  font-size: 40px;
+  text-align:center;
+  margin-bottom:25px;
+  margin-top: 40%;
+}
+
+/* SEARCH */
+.search-bar{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  margin-bottom:30px;
+ 
+}
+
+.search-bar input{
+  padding:12px;
+  width:260px;
+  border:none;
+  border-radius:8px;
+}
+
+.search-bar button{
+  padding:12px 20px;
+  border:none;
+  border-radius:8px;
+  background:#4da3ff;
+  color:white;
+  cursor:pointer;
+}
+
+/* NEWS */
+.news-container{
+  max-width:1100px;
+  margin: 0 auto;
+  display:flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap:18px;
+}
+
+.news-card{
+  max-width: 300px;   
+  background:rgba(255,255,255,0.15);
+  backdrop-filter:blur(12px);
+  border-radius:16px;
+  padding:15px;
+  transition:transform 0.3s ease;
+}
+
+.news-card:hover{
+  transform:translateY(-8px);
+}
+
+.news-card img{
+  width:100%;
+  height:150px;
+  object-fit:cover;
+  border-radius:12px;
+}
+
+h6{
+  margin-top: 80px;
+  font-size:40px;
+}
+
+.news-card a{
+  color:#4da3ff;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+/* about section */
+
+.about-section{
+  background: radial-gradient(circle at center, #4a4085 0%, #1a1b3a 70%, #141529 100%);
+  backdrop-filter: blur(30px);
+  box-shadow: 10px 12px 25px rgba(132, 57, 229, 0.5);
+  line-height: 1.8;
+  margin-top: 80px;
+  padding: 60px 20px;
+  text-align: center;
+  border: none;
+  border-radius: 20px;
+}
+
+
+
+.about-section h2{
+  text-align: center;
+  font-size: 38px;
+  margin-bottom: 30px;
+  color: #fff;
+}
+
+/* day mode heading */
+  body.day .about-section h2{
+    color: #000;
+  }
+
+  .about-card{
+    max-width: 900px;
+    margin: auto;
+    padding: 30px;
+    border-radius: 20px;
+    background: rgba(194, 16, 238, 0.15);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    line-height: 1.8;
+    font-size: 18px;
+    color: #fff;
+    transition: transform 0.4s ease;
+  }
+
+  .about-card:hover{
+    transform: translateY(-8px);
+  }
+
+  /* day mode card */
+  body.day .about-card{
+    background: rgba(255,255,255,0.6);
+    color: #000;
+  }
+
+   body.day .about-section{
+    background: rgba(255,255,255,0.6);
+    color: #000;
+  }
+
+
+  /* Footer styling */
+.footer-section {
+    background: linear-gradient(180deg, #2d2a5a 0%, #1c1b33 100%);
+    border: 1px solid purple;
+    color: #fff;
+    padding: 20px 20px;
+    text-align: center;
+    margin-top: 100px;
+}
+
+.footer-section h2 {
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.footer-section p {
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+.footer-container .contact-info p {
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+.footer-section .socials {
+    margin: 20px 0;
+}
+
+.footer-section .socials a {
+    color: #fff;
+    font-size: 22px;
+    margin: 0 10px;
+    transition: transform 0.3s, color 0.3s;
+}
+
+.footer-section .socials a:hover {
+    transform: scale(1.2);
+    color: #c210ee;
+}
+
+    .footer-section .copyright {
+        margin-top: 20px;
+        font-size: 14px;
+        color: #ccc;
+    }
+
+    /* Day mode */
+    body.day .footer-section {
+        background: linear-gradient(180deg, #9a9999 0%, #aaaaaa 100%);
+        color: #000;
+    }
+
+    body.day .footer-section .socials a {
+        color: #000;
+    }
+
+    body.day .footer-section .socials a:hover {
+        color: #7a1dbe;
+    }
+
+    /* Smooth scroll for anchor links */
+    html {
+        scroll-behavior: smooth;
+    }
+
+
+
+
+
+    @media (max-width: 768px) {
+      .nav ul {
+    gap: 20px; /* tablet/mobile */
+    }
+  }
+
+    @media (max-width: 480px) {
+  .nav ul {
+    gap: 10px; /* small mobile */
+  }
+  }
+
+
+
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <div class="main-div">
+      <div class="nav">
+        <div class="logo">
+          <h1>Weatherly</h1>
+        </div>
+
+          <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="index.html#dashboard">Dashboard</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#news-section">News</a></li>
+            <li><a href="#Contact">Contact</a></li>
+            
+          </ul>
+
+              <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+      </div>
+
+
+      <!-- Hero Section -->
+      <div class="hero">
+        <div class="search-wrapper">
+          <div class="search">
+            <input type="text" id="searchInput" placeholder="Search City...">
+          <i id="btn" class="fa-solid fa-magnifying-glass"></i>
+          </div>
+        </div>
+
+        <div class="head">
+          <h2>Discover The Story Behind Every Skyline</h2>
+          <p class="type">Real-time updates for the world at your fingertips.</p>
+        </div>
+
+        <section id="info">
+          <div id="loading">🔄 Searching...</div>
+            <div class="card-container">
+              <div id="city-card" class="card"></div>
+              <div id="temp-card" class="card"></div>
+              <div id="time-card" class="card"></div>   
+            </div>
+          </div>
+
+        </section>
+     </div>
+
+    <!-- about section -->
+        <section id="about" class="about-section">
+      <h2>🌍 About Weatherly</h2>
+
+      <div class="about-card">
+        <p class="para">
+          <strong>Weatherly</strong> is a modern weather intelligence platform designed to tell
+          the story behind every skyline. We don’t just show numbers — we turn real-time
+          weather data into meaningful insights that help users understand their environment
+          better.
+        </p>
+
+        <p class="para">
+          Our website provides live weather updates, temperature details, wind speed,
+          humidity, local time, and location-based visuals that change according to
+          weather conditions and day/night cycles.
+        </p>
+
+        <p class="para">
+          Hi, I’m <strong>Fiza Zahid</strong> 👋 — a Computer Science student and web developer
+          passionate about building clean, interactive, and user-friendly digital
+          experiences. Weatherly is one of my projects where I combine design, logic,
+          and real-world APIs to create something both useful and visually engaging.
+        </p>
+
+        <p class="para">
+          This platform is built using <strong>HTML, CSS, JavaScript</strong> and real-time
+          APIs, focusing on performance, simplicity, and elegant UI design.
+          Weatherly is continuously evolving with new features like news updates,
+          dynamic themes, and smarter weather visuals.
+        </p>
+      </div>
+    </section>
+
+
+    <!-- //news dection// -->
+    <section id="news-section">
+      <h6>📰 Latest Weather News</h6>
+
+      <div class="search-bar">
+        <input type="text" id="topic" placeholder="Search weather news">
+        <button onclick="getNews()">Search</button>
+      </div>
+
+      <div class="news-container" id="newsContainer"></div>
+
+    </section>
+
+    <!-- footer section -->
+    <!-- Footer -->
+    <footer id="Contact" class="footer-section">
+      <div class="footer-container">
+        <h2>Get in Touch</h2>
+        <p>Have questions or want to collaborate? Reach out!</p>
+        
+        <div class="contact-info">
+          <p><i class="fa-solid fa-envelope"></i> Email: fiza@example.com</p>
+          <p><i class="fa-solid fa-phone"></i> Phone: +92 300 1234567</p>
+          <p><i class="fa-solid fa-map-marker-alt"></i> Location: Sukkur, Pakistan</p>
+        </div>
+        
+        <div class="socials">
+          <a href="https://www.facebook.com/" target="_blank"><i class="fa-brands fa-facebook-f">
+            
+          </i></a>
+          <a href="https://www.Instagram.com/" target="_blank"><i class="fab fa-linkedin"></i></a>
+          <a href="https://www.LinkedIn.com/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+        </div>
+        
+        <p class="copyright">
+          &copy; 2026 Weatherly | Developed by Fiza Zahid
+        </p>
+      </div>
+    </footer>
+
+    
+
+
+
+
+    
+
+  <!-- JS -->
+  <script>
+    const btn = document.getElementById("btn");
+    const input = document.getElementById("searchInput");
+     const loading = document.getElementById("loading");
+    const hero = document.querySelector(".hero");
+
+    //card access
+    const citycard = document.getElementById("city-card");
+    const tempcard = document.getElementById("temp-card");
+    const timecard = document.getElementById("time-card");
+
+   
+
+    async function CheckWeather(city){
+      if(!city) return;
+
+      // Show loader + blur
+      loading.style.display = "block";
+      citycard.style.display = "none";
+      tempcard.style.display = "none";
+      timecard.style.display = "none";
+
+
+      hero.classList.add("blur");
+
+      const api_key = "2b58c92e30b044d46f72b75b300e360f";
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${api_key}&units=metric`;
+
+      try{
+        const weather_data = await fetch(url);
+        const data = await weather_data.json();
+
+        if(data.cod !== 200){
+          alert("City not found!");
+          loading.style.display = "none";
+          hero.classList.remove("blur");
+          return;
+        }
+
+        const timezoneOffset = data.timezone;
+        const nowUTC = new Date(Date.now() + new Date().getTimezoneOffset() * 60000);
+        const cityTime = new Date(nowUTC.getTime() + timezoneOffset * 1000);
+    
+        console.log(cityTime.toLocaleString());
+
+        await GetCountryInfo(data.sys.country, data);
+
+        // Hide loader, show card
+        loading.style.display = "none";
+        hero.classList.remove("blur");
+        citycard.style.display = "block";
+        tempcard.style.display = "block";
+        timecard.style.display = "block";
+
+      }catch(err){
+        alert("Error fetching data");
+        console.error(err);
+        loading.style.display = "none";
+        hero.classList.remove("blur");
+      }
+    }
+
+    async function GetCountryInfo(countryCode, weatherData){
+      const countryUrl = `https://restcountries.com/v3.1/alpha/${countryCode}`;
+      const countryRes = await fetch(countryUrl);
+      const countryData = await countryRes.json();
+      const country = countryData[0];
+
+      const flag = country.flags.svg;
+      const population = country.population.toLocaleString();
+     
+
+    const condition = weatherData.weather[0].main.toLowerCase();
+    const icon = weatherData.weather[0].icon;
+
+    let bgImage = "";
+
+    
+    if (condition.includes("clear")) {
+      bgImage = "Assets/sunny.png";
+    }
+    else if (condition.includes("clouds")) {
+      bgImage = "Assets/cloud.png";
+    }
+
+
+    else if (condition.includes("rain") || condition.includes("drizzle")) {
+      bgImage = "Assets/rain.png";
+    }
+    else if (condition.includes("snow")) {
+      bgImage = "Assets/snow.png";
+    }
+
+     else if (condition.includes("Thunderstorm")) {
+      bgImage = "Assets/thunder.png";
+    }
+    else if (condition.includes("smoke") || condition.includes("haze") || condition.includes("mist")) {
+      bgImage = "Assets/mist.png";
+    }
+    
+    
+    if (tempcard) {
+    tempcard.style.backgroundImage = `url(${bgImage})`;
+    }
+
+
+
+      const language = Object.values(country.languages).join(", ");
+      const currencyData = Object.values(country.currencies)[0];
+      const currency = `(${currencyData.symbol})`;
+      const capital = country.capital[0];
+      const countryName = country.name.common;
+
+     
+  // Correct city time calculation 
+    // ====== CORRECT LOCAL TIME LOGIC ======
+const timezoneOffset = weatherData.timezone;
+
+// current UTC time
+const nowUTC = new Date(
+  Date.now() + new Date().getTimezoneOffset() * 60000
+);
+
+// city local time
+const cityTime = new Date(nowUTC.getTime() + timezoneOffset * 1000);
+
+// TIME
+const time = cityTime.toLocaleTimeString("en-US", {
+  hour: "2-digit",
+  minute: "2-digit",
+  second: "2-digit",
+  hour12: true
+});
+
+// DATE
+const date = cityTime.toLocaleDateString("en-US", {
+  weekday: "long",
+  year: "numeric",
+  month: "long",
+  day: "numeric"
+});
+
+// DAY / NIGHT LOGIC
+const hour = cityTime.getHours();
+const isDay = hour >= 6 && hour < 18;
+
+// BACKGROUND
+const timeBg = isDay ? "Assets/day.png" : "Assets/night.png";
+timecard.style.backgroundImage = `url(${timeBg})`;
+
+  if (isDay) {
+    timecard.style.color = "#000"; // DAY → dark text
+  } else {
+    timecard.style.color = "#fff"; // NIGHT → white text
+  }
+
+// SHOW IN CARD
+timecard.innerHTML = `
+  <h3 class = "local-time">⏰ Local Time</h3>
+  <h2 class="time-value">${time}</h2>
+  <p class="time-date">${date}</p>
+  <p class="time-status">${isDay ? "☀️ Day Time" : "🌙 Night Time"}</p>
+`;
+
+
+      citycard.innerHTML = `
+      <div width="300px" height = "350px">
+        <h2 class="country-flag"><img src="${flag}" style="vertical-align:middle;"> ${weatherData.name}</h2>
+        <div class="info-row"><p><strong>Country:</strong></p><p>${countryName}</p></div>
+        <div class="info-row"><p>🏛️ Capital:</p><p>${capital}</p></div>
+        <div class="info-row"><p>👥 Population:</p><p>${population}</p></div>
+        <div class="info-row"><p>🗣️ Language:</p><p>${language}</p></div>
+        <div class="info-row"><p>💰 Currency:</p><p>${currency}</p></div>
+      </div> 
+       
+      
+      `;
+
+      tempcard.innerHTML = `
+
+        <div class="info-row1"><p>
+          <i class="fa-solid fa-thermometer-half"></i>
+          Temperature</p><p id = "temp" >${weatherData.main.temp}°C, <div id="desc">${weatherData.weather[0].description}</div></p></div>
+        <div class="info-row1"><p><strong>Feels Like:</strong> ${weatherData.main.feels_like}°C</p></div>
+        <div class="info-row1"><p><strong>Condition:</strong> ${weatherData.weather[0].description}</p></div>
+        <div class="info-row1"><p><strong>💧Humidity:</strong> ${weatherData.main.humidity}%</p></div></div>
+        <div class="info-row1"><p><strong>
+          <i class="fa-solid fa-wind"></i>
+          Wind:</strong> ${weatherData.wind.speed} m/s</p>
+       
+      `
+    
+      
+
+
+    }
+
+    //Events
+
+    btn.addEventListener("click", ()=>{
+      const city = input.value.trim();
+      if(city) CheckWeather(city);
+    });
+
+    // Enter key support
+    input.addEventListener("keyup", (e)=>{
+      if(e.key === "Enter"){
+        const city = input.value.trim();
+        if(city) CheckWeather(city);
+      }
+
+    });
+
+    function toggleTheme() {
+    document.body.classList.toggle("day");
+
+    const btn = document.querySelector(".theme-toggle");
+    btn.textContent = document.body.classList.contains("day") ? "☀️" : "🌙";
+    }
+
+    const newsKey = "55cce4bbefa3468eb0cf67e338502d06";
+
+async function getNews(){
+  const topic = document.getElementById("topic").value || "weather";
+  const container = document.getElementById("newsContainer");
+  container.innerHTML = "Loading...";
+
+  try{
+    const res = await fetch(
+      `https://newsapi.org/v2/everything?q=${topic}&apiKey=${newsKey}`
+    );
+    const data = await res.json();
+    container.innerHTML = "";
+
+    if(!data.articles || data.articles.length === 0){
+      container.innerHTML = "<p>No news found</p>";
+      return;
+    }
+
+    data.articles.slice(0,6).forEach(article=>{
+      container.innerHTML += `
+        <div class="news-card">
+          <img src="${article.urlToImage || 'https://via.placeholder.com/300'}">
+          <h4>${article.title}</h4>
+          <a href="${article.url}" target="_blank">Read more</a>
+        </div>
+      `;
+    });
+  }catch(err){
+    container.innerHTML = "<p>Error loading news</p>";
+  }
+}
+
+getNews();
+
+
+    
+
+    
+    
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WorldWeather - Professional Weather Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="weather-container">
+        <!-- Enhanced Sidebar -->
+        <div class="sidebar">
+            <div class="logo-section">
+                <h1 class="logo">
+                    <i class="fas fa-cloud-sun"></i>
+                    Weatherly
+                </h1>
+                <div class="logo-subtitle">Professional Weather Dashboard</div>
+            </div>
+
+            <div class="status-section">
+                <div class="weather-status-card">
+                    <div class="status-header">
+                        <div class="status-indicator active"></div>
+                        <span class="status-text">Live Weather</span>
+                    </div>
+                    <div class="status-details">
+                        <div class="status-item">
+                            <i class="fas fa-thermometer-half"></i>
+                            <span>Feels like 16°C</span>
+                        </div>
+                        <div class="status-item">
+                            <i class="fas fa-tint"></i>
+                            <span>Humidity 65%</span>
+                        </div>
+                        <div class="status-item">
+                            <i class="fas fa-wind"></i>
+                            <span>Wind 12 km/h</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="status-chart">
+                    <canvas id="statusChart"></canvas>
+                </div>
+                <a href="#" class="see-more-link">
+                    <i class="fas fa-chart-line"></i>
+                    View Detailed Analytics
+                </a>
+            </div>
+
+            <div class="area-selection">
+                <h3>Global Coverage</h3>
+                <div class="globe-container">
+                    <div class="globe">
+                        <div class="globe-inner">
+                            <div class="highlighted-region region-1"></div>
+                            <div class="highlighted-region region-2"></div>
+                            <div class="highlighted-region region-3"></div>
+                            <div class="highlighted-region region-4"></div>
+                            <div class="highlighted-region region-5"></div>
+                            <div class="globe-grid"></div>
+                            <div class="globe-glow"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="location-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">150+</span>
+                        <span class="stat-label">Cities</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">50+</span>
+                        <span class="stat-label">Countries</span>
+                    </div>
+                </div>
+                <div class="current-location">
+                    <i class="fas fa-location-dot"></i>
+                    <span>Brooklyn, New York, USA</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Enhanced Header -->
+            <div class="content-header">
+                <div class="location-info">
+                    <h2>Brooklyn, New York, USA</h2>
+                    <p class="date-time">Friday, January 4, 2025</p>
+                    <div class="location-coords">
+                        <i class="fas fa-compass"></i>
+                        <span>40.6782° N, 73.9442° W</span>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <div class="search-container">
+                        <div class="search-input-wrapper">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="inlineSearchInput" placeholder="Search any city worldwide..." />
+                            <div class="search-results-dropdown" id="searchResultsDropdown">
+                                <!-- Search results will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+                    <button class="notification-btn">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">3</span>
+                    </button>
+                    <button class="settings-btn">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                    <button class="download-btn">
+                        <i class="fas fa-mobile-alt"></i>
+                        Get App
+                    </button>
+                </div>
+            </div>
+
+            <!-- Enhanced Current Weather -->
+            <div class="current-weather">
+                <div class="weather-main-content">
+                    <div class="temperature-display">
+                        <div class="main-temp">
+                            <span class="temp-value">18°</span>
+                            <div class="temp-range">
+                                <span class="high">H: 29°</span>
+                                <span class="low">L: 12°</span>
+                            </div>
+                        </div>
+                        <div class="weather-description">
+                            <h3>Stormy with partly cloudy</h3>
+                            <p>Advanced weather monitoring with real-time updates and AI-powered predictions for
+                                accurate forecasting.</p>
+                            <div class="weather-features">
+                                <div class="feature-tag">
+                                    <i class="fas fa-satellite"></i>
+                                    <span>Live Satellite</span>
+                                </div>
+                                <div class="feature-tag">
+                                    <i class="fas fa-brain"></i>
+                                    <span>AI Powered</span>
+                                </div>
+                                <div class="feature-tag">
+                                    <i class="fas fa-sync"></i>
+                                    <span>Real-time</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="weather-animation">
+                    <div class="cloud cloud-1"></div>
+                    <div class="cloud cloud-2"></div>
+                    <div class="lightning"></div>
+                    <div class="rain">
+                        <div class="raindrop"></div>
+                        <div class="raindrop"></div>
+                        <div class="raindrop"></div>
+                        <div class="raindrop"></div>
+                        <div class="raindrop"></div>
+                        <div class="raindrop"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recently Searched -->
+            <div class="recent-searches">
+                <div class="section-header">
+                    <h3>Recently Searched</h3>
+                    <a href="#" class="see-all-link">See All</a>
+                </div>
+                <div class="city-cards">
+                    <div class="city-card">
+                        <div class="city-info">
+                            <h4>Liverpool, UK</h4>
+                            <p class="weather-desc">Partly Cloudy</p>
+                        </div>
+                        <div class="city-temp">16°</div>
+                        <div class="weather-icon">
+                            <i class="fas fa-cloud-sun"></i>
+                        </div>
+                    </div>
+                    <div class="city-card">
+                        <div class="city-info">
+                            <h4>Palermo, Italy</h4>
+                            <p class="weather-desc">Clear</p>
+                        </div>
+                        <div class="city-temp">-2°</div>
+                        <div class="weather-icon">
+                            <i class="fas fa-snowflake"></i>
+                        </div>
+                    </div>
+                </div>
+                ,
+            </div>
+
+            <!-- 6-Day Forecast -->
+            <div class="forecast-section">
+                <h3>6-Day Forecast</h3>
+                <div class="forecast-chart">
+                    <canvas id="forecastChart"></canvas>
+                </div>
+                <div class="forecast-days">
+                    <div class="forecast-day">
+                        <span class="day-name">Sunday</span>
+                        <span class="day-temp">28°</span>
+                    </div>
+                    <div class="forecast-day">
+                        <span class="day-name">Monday</span>
+                        <span class="day-temp">26°</span>
+                    </div>
+                    <div class="forecast-day">
+                        <span class="day-name">Tuesday</span>
+                        <span class="day-temp">27°</span>
+                    </div>
+                    <div class="forecast-day">
+                        <span class="day-name">Wednesday</span>
+                        <span class="day-temp">23°</span>
+                    </div>
+                    <div class="forecast-day">
+                        <span class="day-name">Thursday</span>
+                        <span class="day-temp">30°</span>
+                    </div>
+                    <div class="forecast-day">
+                        <span class="day-name">Friday</span>
+                        <span class="day-temp">25°</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search Modal -->
+    <div class="search-modal" id="searchModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Search Location</h3>
+                <button class="close-modal" id="closeModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="search-input-container">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Enter city, country, or town..." />
+                </div>
+                <div class="search-results" id="searchResults">
+                    <!-- Search results will be populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
